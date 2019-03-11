@@ -18,24 +18,43 @@ import java.util.logging.Logger;
 public class FileNumberingFilterWriter extends FilterWriter {
 
   private static final Logger LOG = Logger.getLogger(FileNumberingFilterWriter.class.getName());
-
+  private int counter = 1;
+  private boolean theEndOfLine = false;
   public FileNumberingFilterWriter(Writer out) {
     super(out);
   }
 
   @Override
   public void write(String str, int off, int len) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    write(str.toCharArray(), off, len);
   }
 
   @Override
   public void write(char[] cbuf, int off, int len) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    for(int i = off; i < off + len ; ++i)
+      write(cbuf[i]);
+
   }
 
   @Override
   public void write(int c) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    //casaes first line or WINDOWS or MACOS
+    if (counter == 1 || (theEndOfLine && c != '\n')) {
+      out.write(new StringBuilder( counter++ + "\t").toString());
+      theEndOfLine = false;
+    }
+    out.write(c);
+
+    if(c == '\r')
+    {
+      theEndOfLine = true;
+    }
+    // a new line for Linux
+    else if (c == '\n')
+    {
+      out.write(new StringBuilder( counter++ + "\t").toString());
+      theEndOfLine = false;
+          }
   }
 
 }

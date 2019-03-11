@@ -125,7 +125,7 @@ public class Application implements IApplication {
       File workspace = new File(directory);
       List<String> tags = quote.getTags();
 
-      // repos workspace delete at the beginngof main so we create a new one
+      // repos workspace deleted at the beginng of main so we create a new one
       workspace.mkdirs();
 
       if (!tags.isEmpty())
